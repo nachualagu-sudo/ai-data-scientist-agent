@@ -289,6 +289,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 .upload-copy h2 { margin: 5px 0 5px; font-size: 1.24rem; letter-spacing: -0.025em; }
 .upload-copy p { margin: 0; color: var(--muted); font-size: 0.82rem; }
+.upload-copy .demo-warning { margin-top: 8px; color: #935500; line-height: 1.5; }
 
 .upload-form { display: flex; align-items: center; gap: 12px; }
 

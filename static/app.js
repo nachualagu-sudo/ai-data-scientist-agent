@@ -1,5 +1,5 @@
 const state = { summary: null, model: null, selectedFile: null };
-const MAX_CLIENT_FILE_BYTES = 200 * 1024 * 1024;
+const MAX_CLIENT_FILE_BYTES = 10 * 1024 * 1024;
 const $ = (id) => document.getElementById(id);
 
 function message(text, type = "info") {
@@ -133,7 +133,7 @@ function showSelectedFile(file) {
   state.selectedFile = file;
   if (!file) {
     $("selectedFileName").textContent = "Choose a file or drop it here";
-    $("selectedFileMeta").textContent = "CSV or XLSX · up to 200 MB";
+    $("selectedFileMeta").textContent = "CSV or XLSX · up to 10 MB";
     return;
   }
   $("selectedFileName").textContent = file.name;
@@ -279,7 +279,7 @@ $("uploadForm").addEventListener("submit", async (event) => {
     return;
   }
   if (file.size > MAX_CLIENT_FILE_BYTES) {
-    message("The selected file is larger than 200 MB.", "error");
+    message("The selected file is larger than 10 MB.", "error");
     return;
   }
 
