@@ -16,7 +16,10 @@ MAX_UPLOAD_MB = int(os.getenv("MAX_UPLOAD_MB", "200"))
 if not 1 <= MAX_UPLOAD_MB <= 250:
     raise RuntimeError("MAX_UPLOAD_MB must be between 1 and 250.")
 MAX_UPLOAD_BYTES = MAX_UPLOAD_MB * 1024 * 1024
-MAX_EXCEL_EXPANDED_BYTES = 500 * 1024 * 1024
+MAX_EXCEL_EXPANDED_MB = int(os.getenv("MAX_EXCEL_EXPANDED_MB", "500"))
+if not 10 <= MAX_EXCEL_EXPANDED_MB <= 500:
+    raise RuntimeError("MAX_EXCEL_EXPANDED_MB must be between 10 and 500.")
+MAX_EXCEL_EXPANDED_BYTES = MAX_EXCEL_EXPANDED_MB * 1024 * 1024
 MAX_ANALYSIS_ROWS = int(os.getenv("MAX_ANALYSIS_ROWS", "50000"))
 MAX_COLUMNS = int(os.getenv("MAX_COLUMNS", "100"))
 if not 100 <= MAX_ANALYSIS_ROWS <= 200_000 or not 2 <= MAX_COLUMNS <= 200:

@@ -21,7 +21,7 @@ No paid language model or API key is required. Statistical insights are generate
 
 For a public deployment, set `APP_USERNAME` and `APP_PASSWORD`. The browser will request these credentials before showing the app.
 
-Hostinger Cloud/Web plans do not run Python applications. For a no-VPS deployment with large uploads, use the included **paid 2 GB Render service and persistent disk** and point the chosen Hostinger subdomain to Render. Review the charges before activating it. See `RENDER_DEPLOYMENT.md`.
+The included `render.yaml` runs a **free Render demo** with a 10 MB upload limit, 10,000 analysis rows, and 3,000 training rows. It has no persistent disk: uploaded datasets and trained models disappear when Render restarts or spins down the service. Use sample or non-sensitive data. See `RENDER_DEPLOYMENT.md`.
 
 ## Run on macOS
 
@@ -60,7 +60,7 @@ The app automatically imputes numeric and categorical missing values and one-hot
 ## Important limits
 
 - This is a single-user educational application. The latest uploaded dataset becomes current for the whole instance.
-- Uploads are limited to 200 MB by default. Set `MAX_UPLOAD_MB` between 1 and 250 to change the limit.
-- Analysis, cleaning, and ML use at most the first 50,000 rows; the UI labels partial results. The production Blueprint trains on at most 15,000 of those rows. Metrics are not representative of the full file if data order is biased.
-- Files and trained models must be stored on a persistent volume when deployed in a container.
+- The free demo limits uploads to 10 MB, analysis to the first 10,000 rows, and model training to 3,000 rows. Local backend defaults can be adjusted with environment variables; the included frontend is labeled for the free demo.
+- The UI labels partial results. Metrics may not represent the full file if data order is biased.
+- The free demo uses temporary storage. Back up anything you need; files and models are deleted on restart or spin-down.
 - The app adds security headers, validates file types and filenames, limits upload size, and rejects oversized expanded Excel workbooks.
