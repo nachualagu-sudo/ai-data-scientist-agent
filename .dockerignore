@@ -1,0 +1,13 @@
+.venv/
+.venv-test/
+__pycache__/
+*.py[cod]
+.git/
+.DS_Store
+.pytest_cache/
+.ruff_cache/
+tests/
+data/uploads/*
+data/charts/*
+data/models/*
+data/current_dataset.json

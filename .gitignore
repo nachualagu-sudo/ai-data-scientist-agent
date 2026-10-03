@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+.venv-test/
+.env
+.DS_Store
+.pytest_cache/
+.ruff_cache/
+data/uploads/*
+data/charts/*
+data/models/*
+!data/uploads/.gitkeep
+!data/charts/.gitkeep
+!data/models/.gitkeep
+data/current_dataset.json
+storage/

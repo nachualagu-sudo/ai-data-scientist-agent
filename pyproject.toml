@@ -1,0 +1,10 @@
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+exclude = [".venv-test"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "RUF"]

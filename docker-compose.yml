@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8010:8010"
+    environment:
+      MAX_UPLOAD_MB: 200
+      MAX_TRAIN_ROWS: 50000
+      APP_ENV: production
+      APP_USERNAME: ${APP_USERNAME:?Set APP_USERNAME}
+      APP_PASSWORD: ${APP_PASSWORD:?Set APP_PASSWORD}
+    volumes:
+      - agent_data:/app/data
+    restart: unless-stopped
+volumes:
+  agent_data:
