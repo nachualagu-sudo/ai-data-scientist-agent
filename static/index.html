@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI Data Scientist Agent for automated dataset analysis and machine learning">
+  <meta name="theme-color" content="#101828">
+  <title>AI Data Scientist Agent</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="topbar" aria-label="Primary navigation">
+      <a class="brand" href="/" aria-label="AI Data Scientist Agent home">
+        <span class="brand-mark" aria-hidden="true">DS</span>
+        <span>AI Data Scientist</span>
+      </a>
+      <div class="topbar-actions">
+        <span class="status-pill"><span class="status-dot"></span>System ready</span>
+        <a class="docs-link" href="/docs" target="_blank" rel="noopener">API Docs <span aria-hidden="true">↗</span></a>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">END-TO-END DATA SCIENCE WORKSPACE</span>
+        <h1>Turn raw data into<br><span>clear decisions.</span></h1>
+        <p>Upload a dataset, understand its quality, clean it, create visualisations, and train a machine-learning model in one guided workflow.</p>
+        <div class="hero-tags" aria-label="Application features">
+          <span>✓ No coding required</span>
+          <span>✓ Runs locally</span>
+          <span>✓ No API cost</span>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="visual-card visual-card-main">
+          <div class="mini-chart">
+            <i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+          <div class="visual-card-copy"><strong>Model performance</strong><span>R² score</span></div>
+          <strong class="visual-score">0.97</strong>
+        </div>
+        <div class="visual-float visual-float-a"><span>3K</span> Rows analysed</div>
+        <div class="visual-float visual-float-b"><span>5</span> Workflow steps</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="upload-card" aria-labelledby="uploadHeading">
+      <div class="section-number" aria-hidden="true">01</div>
+      <div class="upload-copy">
+        <span class="section-kicker">START HERE</span>
+        <h2 id="uploadHeading">Upload your dataset</h2>
+        <p>Choose a CSV or Excel file. Maximum file size is 200 MB.</p>
+      </div>
+      <form id="uploadForm" class="upload-form">
+        <label id="dropZone" class="drop-zone" for="datasetFile">
+          <span class="upload-icon" aria-hidden="true">⇧</span>
+          <span class="file-copy">
+            <strong id="selectedFileName">Choose a file or drop it here</strong>
+            <small id="selectedFileMeta">CSV or XLSX · up to 200 MB</small>
+          </span>
+          <span class="browse-label">Browse</span>
+        </label>
+        <input id="datasetFile" class="visually-hidden" type="file" accept=".csv,.xlsx" required>
+        <button id="uploadButton" class="primary-button" type="submit">
+          <span class="button-label">Upload &amp; Analyse</span><span class="button-arrow" aria-hidden="true">→</span>
+        </button>
+      </form>
+    </section>
+
+    <div id="message" class="notice" role="status" aria-live="polite"></div>
+
+    <div id="progressOverlay" class="progress-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="progressTitle" aria-describedby="progressText">
+      <div class="progress-modal">
+        <div class="progress-orbit" aria-hidden="true"><span>⇧</span></div>
+        <span class="section-kicker">DATASET PROCESSING</span>
+        <h2 id="progressTitle">Uploading your dataset</h2>
+        <p id="progressText">Please keep this page open while the file is being transferred.</p>
+        <div class="progress-file">
+          <span class="progress-file-icon" aria-hidden="true">CSV</span>
+          <div><strong id="progressFileName">dataset.csv</strong><small id="progressFileSize">0 MB</small></div>
+          <strong id="progressPercent">0%</strong>
+        </div>
+        <progress id="uploadProgress" max="100" value="0">0%</progress>
+        <div class="progress-stages" aria-label="Upload progress stages">
+          <div id="stageUpload" class="progress-stage active"><span>1</span><div><strong>Upload</strong><small>Transfer file</small></div></div>
+          <i></i>
+          <div id="stageAnalyse" class="progress-stage"><span>2</span><div><strong>Analyse</strong><small>Read dataset</small></div></div>
+          <i></i>
+          <div id="stageReady" class="progress-stage"><span>3</span><div><strong>Ready</strong><small>Show results</small></div></div>
+        </div>
+        <div class="processing-note"><span aria-hidden="true">i</span> Large files can take a few minutes. The page will update automatically.</div>
+      </div>
+    </div>
+
+    <section id="workspace" class="workspace hidden" aria-label="Dataset workspace">
+      <div class="dataset-bar">
+        <div>
+          <span class="dataset-status"><span class="status-dot"></span>DATASET READY</span>
+          <strong id="currentDataset">Current dataset</strong>
+        </div>
+        <div class="workflow-summary" aria-label="Data science workflow">
+          <span class="complete">1 <small>Upload</small></span>
+          <i></i><span>2 <small>Clean</small></span>
+          <i></i><span>3 <small>Visualise</small></span>
+          <i></i><span>4 <small>Model</small></span>
+        </div>
+      </div>
+      <div id="sampleNotice" class="sample-notice hidden" role="status"></div>
+
+      <nav class="tabs" aria-label="Analysis sections">
+        <button class="tab active" data-tab="overview" aria-selected="true"><span>⌂</span> Overview</button>
+        <button class="tab" data-tab="cleaning" aria-selected="false"><span>✦</span> Cleaning</button>
+        <button class="tab" data-tab="visuals" aria-selected="false"><span>▥</span> Visuals</button>
+        <button class="tab" data-tab="insights" aria-selected="false"><span>◇</span> Insights</button>
+        <button class="tab" data-tab="model" aria-selected="false"><span>◎</span> ML Model</button>
+      </nav>
+
+      <div id="overview" class="tab-content active">
+        <div class="content-heading">
+          <div><span class="section-kicker">DATASET HEALTH</span><h2>Overview</h2></div>
+          <p>A quick summary of the uploaded data and its quality.</p>
+        </div>
+        <div id="metrics" class="metric-grid"></div>
+        <div class="two-column-layout">
+          <section class="panel">
+            <div class="panel-heading"><div><span class="panel-icon">≡</span><h3>Column information</h3></div><small>Types and missing values</small></div>
+            <div id="columnsTable" class="table-wrap"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-heading"><div><span class="panel-icon">⌗</span><h3>Data preview</h3></div><small>First five records</small></div>
+            <div id="previewTable" class="table-wrap"></div>
+          </section>
+        </div>
+      </div>
+
+      <div id="cleaning" class="tab-content">
+        <div class="content-heading">
+          <div><span class="section-kicker">STEP 02</span><h2>Clean your data</h2></div>
+          <p>Prepare the dataset for accurate analysis and modelling.</p>
+        </div>
+        <section class="panel action-panel">
+          <div class="action-illustration" aria-hidden="true">✦</div>
+          <div class="action-copy">
+            <h3>Automated data cleaning</h3>
+            <p>Remove duplicates, normalise column names, and safely fill missing numeric and text values.</p>
+            <ul><li>Duplicate removal</li><li>Missing value treatment</li><li>Cleaned file export</li></ul>
+          </div>
+          <div class="button-stack">
+            <button id="cleanButton" class="primary-button" type="button"><span class="button-label">Clean Dataset</span><span>→</span></button>
+            <a id="downloadDataset" class="secondary-button hidden" href="/download-current-dataset">Download Cleaned File</a>
+          </div>
+        </section>
+        <div id="cleanReport"></div>
+      </div>
+
+      <div id="visuals" class="tab-content">
+        <div class="content-heading">
+          <div><span class="section-kicker">STEP 03</span><h2>Explore visually</h2></div>
+          <p>Discover patterns, distributions, relationships, and correlations.</p>
+        </div>
+        <section class="panel control-panel">
+          <div class="form-grid">
+            <label>Chart type<select id="chartType"><option value="histogram">Histogram</option><option value="bar">Bar chart</option><option value="scatter">Scatter plot</option><option value="line">Line chart</option><option value="box">Box plot</option><option value="heatmap">Correlation heatmap</option></select></label>
+            <label>X column<select id="xColumn"></select></label>
+            <label>Y column<select id="yColumn"><option value="">None</option></select></label>
+            <button id="chartButton" class="primary-button" type="button"><span class="button-label">Generate Chart</span><span>→</span></button>
+          </div>
+        </section>
+        <section class="panel chart-panel">
+          <img id="chartImage" class="hidden" alt="Generated dataset chart">
+          <div id="chartPlaceholder" class="empty-state"><span>▥</span><h3>Your chart will appear here</h3><p>Select a chart type and columns, then click Generate Chart.</p></div>
+        </section>
+      </div>
+
+      <div id="insights" class="tab-content">
+        <div class="content-heading">
+          <div><span class="section-kicker">AUTOMATED ANALYSIS</span><h2>Key insights</h2></div>
+          <p>Important statistical observations generated from the current dataset.</p>
+        </div>
+        <div id="insightCards" class="insight-grid"></div>
+      </div>
+
+      <div id="model" class="tab-content">
+        <div class="content-heading">
+          <div><span class="section-kicker">STEP 04</span><h2>Train a model</h2></div>
+          <p>Choose what to predict and let the application handle preprocessing, training, and evaluation.</p>
+        </div>
+        <section class="panel model-setup">
+          <div class="model-intro">
+            <span class="model-icon" aria-hidden="true">◎</span>
+            <div><h3>Machine-learning setup</h3><p>For the diamond sample, select <strong>price</strong> as the target and keep Task and Model on Auto.</p></div>
+          </div>
+          <div class="form-grid">
+            <label>Target column<select id="targetColumn"></select><small id="targetHint">Select the value to predict.</small></label>
+            <label>Task<select id="taskType"><option value="auto">Auto detect (recommended)</option><option value="regression">Regression</option><option value="classification">Classification</option></select></label>
+            <label>Model<select id="modelType"><option value="auto">Auto / Random Forest</option><option value="random_forest">Random Forest</option><option value="linear">Linear Regression</option><option value="logistic">Logistic Regression</option></select></label>
+            <button id="trainButton" class="primary-button" type="button"><span class="button-label">Train &amp; Evaluate</span><span>→</span></button>
+          </div>
+        </section>
+        <div id="modelResult"></div>
+        <section id="predictionPanel" class="panel hidden">
+          <div class="panel-heading"><div><span class="panel-icon">↗</span><h3>Try a prediction</h3></div><small>Enter feature values below</small></div>
+          <form id="predictionForm" class="prediction-grid"></form>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand"><span class="brand-mark">DS</span><div><strong>AI Data Scientist Agent</strong><small>Educational machine-learning project</small></div></div>
+    <span>Built with Python · FastAPI · Scikit-learn</span>
+  </footer>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
